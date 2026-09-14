@@ -1,0 +1,34 @@
+{
+  "landmarks": [
+    {
+      "id": "fence-tee",
+      "type": "prop",
+      "status": "observed",
+      "source": "user-visual-01"
+    },
+    {
+      "id": "path-left",
+      "type": "terrain-mark",
+      "status": "observed",
+      "source": "user-visual-01"
+    },
+    {
+      "id": "wood-left",
+      "type": "vegetation-mass",
+      "status": "observed",
+      "source": "user-visual-02"
+    },
+    {
+      "id": "tree-line-green",
+      "type": "vegetation-mass",
+      "status": "observed",
+      "source": "user-visual-03"
+    },
+    {
+      "id": "flag-green-right",
+      "type": "prop",
+      "status": "observed",
+      "source": "user-visual-03"
+    }
+  ]
+}

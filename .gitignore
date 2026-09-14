@@ -1,0 +1,13 @@
+node_modules/
+**/node_modules/
+*.log
+dist/
+**/dist/
+coverage/
+.DS_Store
+*.tsbuildinfo
+packages/*/tsconfig.tsbuildinfo
+exports/villarceaux/hole-01/web/assets/
+exports/villarceaux/hole-01/web/index.html
+exports/villarceaux/hole-01/web/dist/
+exports/villarceaux/hole-01/android/dist/

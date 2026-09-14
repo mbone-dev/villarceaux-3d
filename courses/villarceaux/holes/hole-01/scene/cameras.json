@@ -1,0 +1,58 @@
+{
+  "views": [
+    {
+      "id": "depart",
+      "label": "Vue départ",
+      "alpha": -1.48,
+      "beta": 1.07,
+      "radius": 118,
+      "target": [
+        -2,
+        4,
+        -128
+      ]
+    },
+    {
+      "id": "fairway",
+      "label": "Vue fairway",
+      "alpha": -1.25,
+      "beta": 0.98,
+      "radius": 132,
+      "target": [
+        14,
+        8,
+        36
+      ]
+    },
+    {
+      "id": "green",
+      "label": "Vue green",
+      "alpha": -0.54,
+      "beta": 1.02,
+      "radius": 78,
+      "target": [
+        24,
+        10,
+        152
+      ]
+    },
+    {
+      "id": "overview",
+      "label": "Vue d'ensemble",
+      "alpha": -1.18,
+      "beta": 1.09,
+      "radius": 306,
+      "target": [
+        6,
+        9,
+        46
+      ]
+    }
+  ],
+  "tourOrder": [
+    "depart",
+    "fairway",
+    "green",
+    "overview"
+  ]
+}

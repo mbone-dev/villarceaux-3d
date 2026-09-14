@@ -1,0 +1,19 @@
+{
+  "id": "villarceaux",
+  "name": "Golf de Villarceaux",
+  "units": "m",
+  "coordinateSystem": {
+    "name": "repere-local-v1",
+    "xAxis": "droite-cadrage",
+    "yAxis": "haut",
+    "zAxis": "profondeur-cadrage",
+    "geographicTransform": null,
+    "transformStatus": "unknown"
+  },
+  "holes": [
+    {
+      "id": "hole-01",
+      "path": "holes/hole-01/hole.json"
+    }
+  ]
+}

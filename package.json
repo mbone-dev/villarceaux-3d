@@ -1,0 +1,21 @@
+{
+  "name": "villarceaux-3d",
+  "private": true,
+  "version": "0.1.0",
+  "description": "V1 visualisable du trou 01 de Villarceaux",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "npm --workspace apps/web-demo run dev",
+    "build": "npm run build -ws --if-present",
+    "typecheck": "npm run typecheck -ws --if-present",
+    "test": "npm run test -ws --if-present && npm run validate:data",
+    "validate:data": "node tools/validation/validate-hole1.mjs",
+    "preview:web": "npm --workspace apps/web-demo run preview"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

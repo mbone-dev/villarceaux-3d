@@ -1,0 +1,44 @@
+{
+  "entries": [
+    {
+      "id": "user-visual-01",
+      "title": "Image utilisateur #1 (départ présumé)",
+      "origin": "Pièce jointe chat",
+      "captureDate": null,
+      "rights": "à confirmer",
+      "importStatus": "pending_binary_access"
+    },
+    {
+      "id": "user-visual-02",
+      "title": "Image utilisateur #2 (vue intermédiaire)",
+      "origin": "Pièce jointe chat",
+      "captureDate": null,
+      "rights": "à confirmer",
+      "importStatus": "pending_binary_access"
+    },
+    {
+      "id": "user-visual-03",
+      "title": "Image utilisateur #3 (green/bunker)",
+      "origin": "Pièce jointe chat",
+      "captureDate": null,
+      "rights": "à confirmer",
+      "importStatus": "pending_binary_access"
+    },
+    {
+      "id": "club-hole-page",
+      "title": "Page officielle trou 1 - La Via Calciata",
+      "origin": "https://www.villarceaux.com/grand-parcours-trou-1/",
+      "captureDate": "2026-09-14",
+      "rights": "consultation uniquement",
+      "importStatus": "reviewed"
+    },
+    {
+      "id": "ffgolf-calculator",
+      "title": "FFGolf calculette trou 1",
+      "origin": "https://pages.ffgolf.org/tools/calculette?glfcod=0108&k=5ebdad5ec5e751562d3ac10ddb1ed3a1&tercod=01",
+      "captureDate": "2026-09-14",
+      "rights": "consultation uniquement",
+      "importStatus": "reviewed"
+    }
+  ]
+}

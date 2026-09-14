@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Villarceaux Trou 01 · V1</title>
+    <style>
+      :root { color-scheme: light; }
+      body { margin: 0; font-family: Inter, system-ui, sans-serif; background: #101820; color: #e9edf0; }
+      #app { min-height: 100vh; display: grid; grid-template-rows: auto 1fr; }
+      header { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 12px; background: rgba(10, 24, 37, 0.9); border-bottom: 1px solid rgba(255,255,255,0.1); }
+      button, select { background: #1f2f40; color: #e9edf0; border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; padding: 8px 10px; }
+      button:hover, select:hover { background: #293d50; }
+      #canvas-host { position: relative; min-height: 70vh; }
+      #viewer { position: absolute; inset: 0; }
+      #status { position: absolute; right: 12px; bottom: 12px; max-width: 360px; background: rgba(9, 17, 24, 0.78); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.15); border-radius: 12px; padding: 8px 10px; font-size: 12px; line-height: 1.35; }
+      #message { padding: 12px; }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <button data-view="depart">Vue départ</button>
+        <button data-view="fairway">Vue fairway</button>
+        <button data-view="green">Vue green</button>
+        <button data-view="overview">Vue d'ensemble</button>
+        <button id="tour-start">Visite auto démarrer</button>
+        <button id="tour-stop">Visite auto arrêter</button>
+        <button id="reset">Retour initial</button>
+        <label>
+          Qualité
+          <select id="quality">
+            <option value="high">Haute qualité</option>
+            <option value="tablet">Profil tablette</option>
+          </select>
+        </label>
+      </header>
+      <div id="canvas-host">
+        <div id="viewer" aria-label="Visualisation trou 01"></div>
+        <aside id="status"></aside>
+      </div>
+      <div id="message" role="status"></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

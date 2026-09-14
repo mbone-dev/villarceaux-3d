@@ -1,0 +1,14 @@
+{
+  "name": "@villarceaux/scene-contract",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "node --test tests/contract.test.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.9.2"
+  }
+}

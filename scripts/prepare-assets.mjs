@@ -29,7 +29,8 @@ if(!await exists(output+'materials.json')){
   let selected=false;
   for(const id of candidates.slice(0,4)){
    const files=await (await request('https://api.polyhaven.com/files/'+id)).json();
-   const pick=key=>files[key]?.['1k']?.jpg||files[key]?.['1k']?.png;
+   const pick=key=>{const aliases={diff:/^(diff|diffuse|albedo|color)$/i,nor_gl:/^(nor_gl|normal|normalgl|normal_gl)$/i,rough:/^(rough|roughness)$/i};const found=Object.keys(files).find(k=>aliases[key].test(k));return files[found]?.['1k']?.jpg||files[found]?.['1k']?.png};
+   console.log('Matériau',id,'cartes disponibles',Object.keys(files).join(', '));
    if(!pick('diff')||!pick('nor_gl'))continue;
    const record={id,source:'https://polyhaven.com/a/'+id,maps:{}};
    for(const [map,key] of [['color','diff'],['normal','nor_gl'],['roughness','rough']]){

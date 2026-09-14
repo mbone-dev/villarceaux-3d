@@ -8,7 +8,7 @@ import {buildVegetation,buildDetails} from './vegetation.js';
 const $=s=>document.querySelector(s);
 function fail(error){$('#loading').hidden=true;$('#error').hidden=false;$('#error').textContent='La visite n’a pas démarré : '+error.message;console.error(error)}
 window.addEventListener('unhandledrejection',e=>fail(e.reason));window.addEventListener('error',e=>fail(e.error||Error(e.message)));
-try{await start()}catch(e){fail(e)}
+start().catch(fail);
 async function start(){
  const read=name=>fetch('/assets/'+name+'.json').then(r=>{if(!r.ok)throw Error('Données manquantes : lancer npm run assets.');return r.json()});
  const [grid,layout,{textures,data}]=await Promise.all([read('terrain-grid'),read('course-layout'),loadMaterials()]);

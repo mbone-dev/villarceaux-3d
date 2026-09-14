@@ -21,7 +21,7 @@ await writeFile(output+'course-layout.json',await readFile(new URL('../data/cour
 if(!await exists(output+'materials.json')){
  // Discover actual asset IDs from the provider catalogue, never assume a download URL exists.
  const catalogue=await (await request('https://api.polyhaven.com/assets?t=textures')).json();
- const choices={grass:{include:/grass/i,exclude:/rock|snow|moss|dirt|aerial/i},sand:{include:/sand/i,exclude:/stone|brick|rock|wood/i},road:{include:/asphalt/i,exclude:/paint|paver/i}};
+ const choices={grass:{include:/grass/i,exclude:/rock|snow|moss|dirt|aerial|concrete|pavement|path|paver/i},sand:{include:/sand/i,exclude:/stone|brick|rock|wood/i},road:{include:/asphalt/i,exclude:/paint|paver/i}};
  const manifest={provider:'Poly Haven',license:'CC0',licenseURL:'https://polyhaven.com/license',selected:new Date().toISOString(),materials:{}};
  for(const [kind,filter] of Object.entries(choices)){
   const candidates=Object.keys(catalogue).filter(id=>filter.include.test(id+' '+catalogue[id].name)&&!filter.exclude.test(id)).sort();

@@ -29,13 +29,13 @@ if(!await exists(output+'materials.json')){
   let selected=false;
   for(const id of candidates.slice(0,4)){
    const files=await (await request('https://api.polyhaven.com/files/'+id)).json();
-   const pick=key=>files[key]?.['1k']?.jpg;
+   const pick=key=>files[key]?.['1k']?.jpg||files[key]?.['1k']?.png;
    if(!pick('diff')||!pick('nor_gl'))continue;
    const record={id,source:'https://polyhaven.com/a/'+id,maps:{}};
    for(const [map,key] of [['color','diff'],['normal','nor_gl'],['roughness','rough']]){
     const item=pick(key);if(!item){if(map==='roughness')continue;throw Error('Carte manquante')}
     const u=new URL(item.url);if(u.protocol!=='https:'||!u.hostname.endsWith('.polyhaven.org'))throw Error('Hôte de matériau inattendu');
-    const bytes=Buffer.from(await (await request(item.url)).arrayBuffer());const filename=kind+'-'+map+'.jpg';
+    const bytes=Buffer.from(await (await request(item.url)).arrayBuffer());const extension=new URL(item.url).pathname.endsWith('.png')?'png':'jpg';const filename=kind+'-'+map+'.'+extension;
     await writeFile(output+filename,bytes);record.maps[map]={file:filename,source:item.url,sha256:createHash('sha256').update(bytes).digest('hex')};
    }
    manifest.materials[kind]=record;selected=true;break;

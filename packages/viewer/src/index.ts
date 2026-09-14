@@ -1,5 +1,4 @@
 import {
-  Animation,
   ArcRotateCamera,
   Color3,
   Color4,
@@ -47,6 +46,7 @@ interface SceneData {
     };
   };
   cameras: CameraView[];
+  tourOrder?: ViewId[];
 }
 
 interface HoleData {
@@ -127,7 +127,7 @@ export function mountHoleViewer(options: MountOptions): HoleViewerApi {
       y += lipRing * terrain.bunker.lip;
     }
 
-    return y;
+    return Math.max(-terrain.maxHeight, Math.min(terrain.maxHeight, y));
   };
 
   const pos = terrainMesh.getVerticesData(VertexBuffer.PositionKind);
@@ -298,7 +298,7 @@ export function mountHoleViewer(options: MountOptions): HoleViewerApi {
 
   const views = new Map(sceneData.cameras.map((v) => [v.id, v]));
   const defaultView = views.get('overview') ?? sceneData.cameras[0];
-  const animationFrameRate = 60;
+  let transitionToken = 0;
 
   const animateToView = (view: CameraView, instant = false) => {
     const target = new Vector3(...view.target);
@@ -310,19 +310,32 @@ export function mountHoleViewer(options: MountOptions): HoleViewerApi {
       return;
     }
 
-    const alphaAnim = Animation.CreateAndStartAnimation('alphaAnim', camera, 'alpha', animationFrameRate, 25, camera.alpha, view.alpha, 0);
-    const betaAnim = Animation.CreateAndStartAnimation('betaAnim', camera, 'beta', animationFrameRate, 25, camera.beta, view.beta, 0);
-    const radiusAnim = Animation.CreateAndStartAnimation('radiusAnim', camera, 'radius', animationFrameRate, 25, camera.radius, view.radius, 0);
-    const fromTarget = camera.target.clone();
-    Animation.CreateAndStartAnimation('targetAnimX', fromTarget, 'x', animationFrameRate, 25, fromTarget.x, target.x, 0);
-    Animation.CreateAndStartAnimation('targetAnimY', fromTarget, 'y', animationFrameRate, 25, fromTarget.y, target.y, 0);
-    Animation.CreateAndStartAnimation('targetAnimZ', fromTarget, 'z', animationFrameRate, 25, fromTarget.z, target.z, 0);
-    scene.onBeforeRenderObservable.addOnce(() => {
-      camera.setTarget(target);
-      alphaAnim?.stop();
-      betaAnim?.stop();
-      radiusAnim?.stop();
-    });
+    const token = ++transitionToken;
+    const from = {
+      alpha: camera.alpha,
+      beta: camera.beta,
+      radius: camera.radius,
+      target: camera.target.clone(),
+    };
+    const durationMs = 420;
+    const startedAt = performance.now();
+
+    const step = (now: number) => {
+      if (token !== transitionToken) return;
+      const t = Math.min(1, (now - startedAt) / durationMs);
+      const eased = t * (2 - t);
+      camera.alpha = from.alpha + (view.alpha - from.alpha) * eased;
+      camera.beta = from.beta + (view.beta - from.beta) * eased;
+      camera.radius = from.radius + (view.radius - from.radius) * eased;
+      const nextTarget = Vector3.Lerp(from.target, target, eased);
+      camera.setTarget(nextTarget);
+
+      if (t < 1) {
+        window.requestAnimationFrame(step);
+      }
+    };
+
+    window.requestAnimationFrame(step);
   };
 
   animateToView(defaultView, true);
@@ -330,16 +343,15 @@ export function mountHoleViewer(options: MountOptions): HoleViewerApi {
   const setQuality = (quality: QualityProfile) => {
     if (quality === 'tablet') {
       engine.setHardwareScalingLevel(Math.min(1.8, window.devicePixelRatio));
-      sun.shadowEnabled = false;
     } else {
       engine.setHardwareScalingLevel(1);
-      sun.shadowEnabled = true;
     }
   };
 
   let tourTimer: number | null = null;
   let tourIndex = 0;
-  const tourOrder: ViewId[] = ['depart', 'fairway', 'green', 'overview'];
+  const defaultTourOrder: ViewId[] = ['depart', 'fairway', 'green', 'overview'];
+  const tourOrder = (sceneData.tourOrder?.length ? sceneData.tourOrder : defaultTourOrder).filter((viewId) => views.has(viewId));
 
   const stopTour = () => {
     if (tourTimer !== null) {
@@ -351,6 +363,7 @@ export function mountHoleViewer(options: MountOptions): HoleViewerApi {
   const startTour = () => {
     stopTour();
     if (reduceMotion) return;
+    if (tourOrder.length === 0) return;
 
     const apply = () => {
       const viewId = tourOrder[tourIndex % tourOrder.length];

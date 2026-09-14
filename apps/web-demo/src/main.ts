@@ -13,32 +13,56 @@ if (!container || !message || !status) {
 
 try {
   const allowedIds: ViewId[] = ['depart', 'fairway', 'green', 'overview'];
-  const views = cameraData.views
-    .filter((view): view is typeof view & { id: ViewId } => allowedIds.includes(view.id as ViewId))
-    .map((view) => ({
+  const rawViews = cameraData.views.map((view) => {
+    if (!allowedIds.includes(view.id as ViewId)) {
+      throw new Error(`Identifiant de vue non supporté: ${view.id}`);
+    }
+    return {
       ...view,
+      id: view.id as ViewId,
       target: [view.target[0], view.target[1], view.target[2]] as [number, number, number],
-    }));
+    };
+  });
+
+  for (const expected of allowedIds) {
+    if (!rawViews.some((view) => view.id === expected)) {
+      throw new Error(`Vue caméra manquante dans cameras.json: ${expected}`);
+    }
+  }
+
+  const tourOrder = cameraData.tourOrder.map((id) => {
+    if (!allowedIds.includes(id as ViewId)) {
+      throw new Error(`tourOrder contient une vue invalide: ${id}`);
+    }
+    return id as ViewId;
+  });
 
   const api = mountHoleViewer({
     container,
     holeData,
     sceneData: {
       ...sceneData,
-      cameras: views,
+      cameras: rawViews,
+      tourOrder,
     },
     quality: 'high',
     autoStartTour: !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   });
 
   message.textContent = 'Scène V1 chargée. Reconstitution estimée, non métrique fine.';
-  status.innerHTML = [
-    `<strong>${holeData.metadata.name}</strong>`,
-    `Version: ${holeData.metadata.version}`,
-    `Provenance: ${holeData.metadata.provenance.summary}`,
-    `Précision: ${holeData.metadata.precisionNotice}`,
-    `Distance de référence: ${holeData.metadata.distance_m.value ?? 'inconnue'} m`,
-  ].join('<br>');
+  status.replaceChildren();
+  const lines: Array<[string, string]> = [
+    ['Titre', holeData.metadata.name],
+    ['Version', holeData.metadata.version],
+    ['Provenance', holeData.metadata.provenance.summary],
+    ['Précision', holeData.metadata.precisionNotice],
+    ['Distance de référence', `${holeData.metadata.distance_m.value ?? 'inconnue'} m`],
+  ];
+  for (const [label, value] of lines) {
+    const row = document.createElement('div');
+    row.textContent = `${label}: ${value}`;
+    status.appendChild(row);
+  }
 
   document.querySelectorAll<HTMLButtonElement>('button[data-view]').forEach((button) => {
     button.addEventListener('click', () => api.setView(button.dataset.view as ViewId));

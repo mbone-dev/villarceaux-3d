@@ -2,8 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root = path.resolve(process.cwd(), '..', '..');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
 const holePath = path.join(root, 'courses/villarceaux/holes/hole-01/hole.json');
 
 test('hole-01 utilise les statuts attendus', () => {

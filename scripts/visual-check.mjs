@@ -13,10 +13,10 @@ try{
  await page.waitForFunction(()=>window.__courseReview?.ready,{},{timeout:120000});
  const diagnostics=await page.evaluate(()=>window.__courseReview);assert(diagnostics.roadOnRight);
  await mkdir('artifacts',{recursive:true});
- for(const view of ['tee','approach','green','aerial']){await page.locator('[data-view="'+view+'"]').click();await page.waitForTimeout(2100);await page.screenshot({path:'artifacts/'+view+'.png'})}
- await page.locator('#progress').fill('170');await page.waitForTimeout(200);assert.equal(await page.locator('#travel').textContent(),'170 m');
+ for(const view of ['tee','approach','green','aerial']){await page.locator('[data-view="'+view+'"]').click();await page.waitForFunction(()=>!window.__courseReview?.moving,{},{timeout:120000});await page.screenshot({path:'artifacts/'+view+'.png',timeout:90000})}
+ await page.locator('#progress').press('End');await page.waitForTimeout(200);assert.equal(await page.locator('#travel').textContent(),'353 m');
  await page.locator('#info').click();assert(await page.locator('#about').isVisible());await page.locator('#close').click();
- await page.setViewportSize({width:390,height:844});await page.locator('[data-view="tee"]').click();await page.waitForTimeout(2100);await page.screenshot({path:'artifacts/mobile.png'});
+ await page.setViewportSize({width:390,height:844});await page.locator('[data-view="tee"]').click();await page.waitForTimeout(2100);await page.screenshot({path:'artifacts/mobile.png',timeout:90000});
  await writeFile('artifacts/checks.json',JSON.stringify({diagnostics,errors,warning:'Captures de rendu logiciel CI ; aucune mesure de performance Android.'},null,2));
  assert.deepEqual(errors,[],'Erreurs de rendu ou de chargement');
 }finally{await browser?.close();server.kill('SIGTERM')}

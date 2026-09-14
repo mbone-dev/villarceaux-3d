@@ -4,7 +4,9 @@
     "baseUrl": ".",
     "types": ["vite/client", "node"],
     "paths": {
-      "@courses/*": ["../../courses/*"]
+      "@courses/*": ["../../courses/*"],
+      "@villarceaux/viewer": ["../../packages/viewer/src/index.ts"],
+      "@villarceaux/scene-contract": ["../../packages/scene-contract/src/index.ts"]
     }
   },
   "include": ["src/**/*.ts", "vite.config.ts"]

@@ -8,6 +8,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@courses': path.resolve(__dirname, '../../courses'),
+      '@villarceaux/viewer': path.resolve(__dirname, '../../packages/viewer/src/index.ts'),
+      '@villarceaux/scene-contract': path.resolve(__dirname, '../../packages/scene-contract/src/index.ts'),
     },
   },
   server: {

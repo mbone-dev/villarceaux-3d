@@ -9,13 +9,13 @@
   ],
   "scripts": {
     "dev:web": "npm --workspace apps/web-demo run dev",
-    "build": "npm run build -ws --if-present",
-    "typecheck": "npm run typecheck -ws --if-present",
-    "test": "npm run test -ws --if-present && npm run validate:data",
+    "build": "npm --workspace @villarceaux/scene-contract run build && npm --workspace @villarceaux/viewer run build && npm --workspace @villarceaux/web-demo run build",
+    "typecheck": "npm --workspace @villarceaux/scene-contract run typecheck && npm --workspace @villarceaux/viewer run typecheck && npm --workspace @villarceaux/web-demo run typecheck",
+    "test": "npm --workspace @villarceaux/scene-contract run test && npm run validate:data",
     "validate:data": "node tools/validation/validate-hole1.mjs",
     "preview:web": "npm --workspace apps/web-demo run preview"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": "^20.19.0 || >=22.12.0"
   }
 }

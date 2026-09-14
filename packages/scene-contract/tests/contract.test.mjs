@@ -5,10 +5,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', '..');
-const holePath = path.join(root, 'courses/villarceaux/holes/hole-01/hole.json');
+const filesToValidate = [
+  'courses/villarceaux/holes/hole-01/hole.json',
+  'courses/villarceaux/holes/hole-01/scene/surfaces.json',
+  'courses/villarceaux/holes/hole-01/scene/landmarks.json',
+];
 
 test('hole-01 utilise les statuts attendus', () => {
-  const hole = JSON.parse(fs.readFileSync(holePath, 'utf8'));
   const statuses = new Set(['measured', 'documented', 'observed', 'estimated', 'unknown']);
 
   const check = (obj) => {
@@ -22,5 +25,8 @@ test('hole-01 utilise les statuts attendus', () => {
     for (const value of Object.values(obj)) check(value);
   };
 
-  check(hole);
+  for (const relPath of filesToValidate) {
+    const data = JSON.parse(fs.readFileSync(path.join(root, relPath), 'utf8'));
+    check(data);
+  }
 });

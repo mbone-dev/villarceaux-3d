@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Villarceaux · La Via Calciata</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231a3424'/%3E%3Cpath d='M10 27V5l15 5-15 5' stroke='%23e9dfb6' fill='none' stroke-width='2'/%3E%3C/svg%3E"></head>
+<body><canvas id="world" aria-label="Visite 3D du trou 1"></canvas>
+<header><div><b>VILLARCEAUX</b><span>01 · La Via Calciata</span></div><p>PAR 4 · 353 m</p><button id="info">Sources</button></header>
+<aside><canvas id="map" width="160" height="340" aria-label="Plan du trou et route à droite"></canvas><output id="distance">353 m</output></aside>
+<div id="caption">Depuis le départ</div>
+<nav aria-label="Visite"><div id="views"><button data-view="tee" class="active">Départ</button><button data-view="fairway">Fairway</button><button data-view="approach">Approche</button><button data-view="green">Green</button><button data-view="aerial">Survol</button></div>
+<div class="travel"><button id="tour">▶ Visiter</button><input id="progress" type="range" min="0" max="353" value="0" aria-label="Avancer sur le trou"><output id="travel">0 m</output></div></nav>
+<footer><span>Glisser : tourner · Molette : zoomer</span><button id="quality">Qualité élevée</button><button id="export">Exporter le terrain</button></footer>
+<div id="loading" role="status">Préparation de la visite…</div><div id="error" hidden role="alert"></div>
+<dialog id="about"><button id="close">Fermer</button><h2>Une reconstruction à affiner.</h2><p>Le relief utilise une grille IGN de 10 mètres. Les contours sont digitaux. Les arbres, le modelé des bunkers et les détails du départ sont interprétés à partir des trois références fournies.</p><p>La D142 longe le côté droit dans le sens du jeu. Les positions de référence donnent un axe d’environ 348 m ; la distance officielle depuis les blancs est de 353 m.</p><p>Ce prototype ne mesure pas encore les pentes fines nécessaires à une simulation de putting.</p><a href="https://www.villarceaux.com/grand-parcours-trou-1/" target="_blank" rel="noreferrer">Fiche du club</a><a href="/assets/terrain-grid.json" download>Altitudes IGN</a><p id="materials-credit"></p></dialog>
+<script type="module" src="/src/main.js"></script></body></html>

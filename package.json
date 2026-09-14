@@ -1,0 +1,21 @@
+{
+  "name": "villarceaux-3d",
+  "private": true,
+  "version": "0.1.0",
+  "description": "V1 visualisable du trou 01 de Villarceaux",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "npm --workspace apps/web-demo run dev",
+    "build": "npm --workspace @villarceaux/scene-contract run build && npm --workspace @villarceaux/viewer run build && npm --workspace @villarceaux/web-demo run build",
+    "typecheck": "npm --workspace @villarceaux/scene-contract run typecheck && npm --workspace @villarceaux/viewer run typecheck && npm --workspace @villarceaux/web-demo run typecheck",
+    "test": "npm --workspace @villarceaux/scene-contract run test && npm run validate:data",
+    "validate:data": "node tools/validation/validate-hole1.mjs",
+    "preview:web": "npm --workspace apps/web-demo run preview"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
+}

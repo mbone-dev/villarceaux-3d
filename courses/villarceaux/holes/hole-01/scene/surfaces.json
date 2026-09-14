@@ -1,0 +1,51 @@
+{
+  "terrain": {
+    "width": 180,
+    "depth": 380,
+    "maxHeight": 22,
+    "slopeRight": 2.7,
+    "ridge": {
+      "x": -28,
+      "z": 55,
+      "gain": 3.5,
+      "spread": 82
+    },
+    "greenRise": {
+      "x": 22,
+      "z": 152,
+      "gain": 4.2,
+      "spread": 46
+    },
+    "bunker": {
+      "x": 7,
+      "z": 138,
+      "rx": 18,
+      "rz": 11,
+      "depth": 1.8,
+      "lip": 0.95,
+      "lipWidth": 0.24
+    }
+  },
+  "surfaces": [
+    {
+      "id": "tee",
+      "status": "estimated"
+    },
+    {
+      "id": "fairway",
+      "status": "estimated"
+    },
+    {
+      "id": "rough",
+      "status": "estimated"
+    },
+    {
+      "id": "green",
+      "status": "estimated"
+    },
+    {
+      "id": "bunker",
+      "status": "observed"
+    }
+  ]
+}

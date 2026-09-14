@@ -1,0 +1,40 @@
+name: Vérifier la scène
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Installer les dépendances
+        run: npm install --no-audit --no-fund
+      - name: Vérifier les repères géographiques
+        run: npm test
+      - name: Préparer les données IGN et les textures
+        run: npm run assets
+      - name: Construire la visite
+        run: npm run build
+      - name: Installer Chromium pour la revue
+        run: npx playwright install --with-deps chromium
+      - name: Contrôler les vues
+        run: npm run test:visual
+      - name: Conserver le résultat et les sources des matériaux
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: villarceaux-review
+          path: |
+            artifacts/
+            public/assets/
+            dist/
+            package-lock.json
+          if-no-files-found: warn
+          retention-days: 30

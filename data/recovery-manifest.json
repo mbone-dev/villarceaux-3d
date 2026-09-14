@@ -1,0 +1,27 @@
+{
+  "status": "Reconstruction des sources depuis la conversation, pas une copie binaire complète du projet initial.",
+  "publishedSite": "https://villarceaux-trou-un-studio.maisonneuve-erwan.chatgpt.site",
+  "originalSourceCommit": "d00abd6be6d0e15534b984f27427c608081c4864",
+  "originalArchive": {
+    "sha256": "eeda1f4950ad26468d78f191d326493430b9cd2e1ddd25193770d70144c190dd",
+    "bytes": 6389760
+  },
+  "recovered": [
+    "Contours digitaux du trou",
+    "Positions géographiques du départ et du green",
+    "Convention géographique et correction droite/gauche",
+    "Principe de sculpture des bunkers et du départ",
+    "Sources et demandes de correction"
+  ],
+  "regenerated": [
+    "Grille d'altitudes par requête IGN",
+    "Placement interprété des arbres",
+    "Matériaux PBR acquis auprès de Poly Haven"
+  ],
+  "notCopied": [
+    "Fichiers PNG fournis par l'utilisateur",
+    "Réponse IGN originale",
+    "Bibliothèques et textures binaires originales"
+  ],
+  "validation": "Ne pas présenter comme rendu vérifié ou refonte déjà publiée."
+}

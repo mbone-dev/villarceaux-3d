@@ -3,7 +3,7 @@ import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 const output=fileURLToPath(new URL('../public/assets/',import.meta.url));
 await mkdir(output,{recursive:true});
-async function request(url,options={}){const response=await fetch(url,{...options,signal:AbortSignal.timeout(90000)});if(!response.ok)throw new Error(url+': '+response.status);return response}
+async function request(url,options={}){const response=await fetch(url,{...options,signal:AbortSignal.timeout(90000)});if(!response.ok)throw new Error(url+': '+response.status+' '+(await response.text()).slice(0,700));return response}
 const exists=async p=>{try{await access(p);return true}catch{return false}};
 const json=(name,value)=>writeFile(output+name,JSON.stringify(value,null,2)+'\n');
 // Preserve imported original data. Never silently replace a recovered grid.
@@ -11,7 +11,7 @@ if(!await exists(output+'terrain-grid.json')){
  const tee=[1.711045,49.115037],green=[1.70716,49.11686],metresLat=111320,metresLon=111320*Math.cos(tee[1]*Math.PI/180);
  const east=(green[0]-tee[0])*metresLon,north=(green[1]-tee[1])*metresLat,length=Math.hypot(east,north),de=east/length,dn=north/length;
  const lon=[],lat=[];for(let j=0;j<56;j++)for(let i=0;i<29;i++){const x=-140+i*10,z=-70+j*10;lon.push(+(tee[0]+(de*z+dn*x)/metresLon).toFixed(7));lat.push(+(tee[1]+(dn*z-de*x)/metresLat).toFixed(7))}
- const source=await (await request('https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resource:'ign_rge_alti_wld',lon:lon.join('|'),lat:lat.join('|'),delimiter:'|',zonly:false})})).json();
+ const source=await (await request('https://data.geopf.fr/altimetrie/1.0/calcul/alti/rest/elevation.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({resource:'ign_rge_alti_wld',lon:lon.join('|'),lat:lat.join('|'),delimiter:'|',zonly:'false'})})).json();
  const elevations=source.elevations?.map(p=>p.z);
  if(elevations?.length!==1624||!elevations.every(z=>Number.isFinite(z)&&z>0&&z<500))throw Error('Grille IGN invalide : aucune altitude de remplacement inventée.');
  await json('ign-elevations-source.json',source);
